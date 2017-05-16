@@ -10,6 +10,7 @@ Plug 'airblade/vim-gitgutter'                                 " Show the column 
 Plug 'vim-airline/vim-airline'                                " Add a nicer status line
 Plug 'vim-airline/vim-airline-themes'                         " Themes for Airline
 Plug 'mhinz/vim-startify'                                     " Start Vim with a more useful start screen
+Plug 'tpope/vim-repeat'                                       " Make many more operations repeatable with `.`
 
 call plug#end()
 
