@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'                                 " Show the column of changes to the file against git
 Plug 'vim-airline/vim-airline'                                " Add a nicer status line
 Plug 'vim-airline/vim-airline-themes'                         " Themes for Airline
+Plug 'mhinz/vim-startify'                                     " Start Vim with a more useful start screen
 
 call plug#end()
 
@@ -49,4 +50,44 @@ let g:airline_theme = "kalisi"
 set statusline=%<%f\ %h%m%r%=%-20.(line=%l\ of\ %L,col=%c%V%)\%h%m%r%=%-40(,%n%Y%)\%P%#warningmsg#%{SyntasticStatuslineFlag()}%*
 set laststatus=2                        " Always show status line.
 
+" ----------------------------------------------
+" Setup Startify
+" ----------------------------------------------
 
+" Setup vim-startify's start screen
+let g:startify_change_to_vcs_root = 1
+let g:startify_files_number = 6
+let g:startify_custom_header = [
+      \ '   __      __            ',
+      \ '   \ \    / (_)          ',
+      \ '    \ \  / / _ _ __ ___  ',
+      \ '     \ \/ / | | `_ ` _ \ ',
+      \ '      \  /  | | | | | | |',
+      \ '       \/   |_|_| |_| |_|',
+      \ '                         ',
+      \ ]
+
+let g:startify_custom_footer = [
+      \'',
+      \"   Vim is charityware. Please read ':help uganda'",
+      \]
+
+let g:startify_list_order = [
+      \ ['   Recent files in this directory:'],
+      \ 'dir',
+      \ ['   Bookmarks:'],
+      \ 'bookmarks',
+      \ ['   Sessions:'],
+      \ 'sessions',
+      \ ]
+
+let g:startify_skiplist = [
+      \ 'COMMIT_EDITMSG',
+      \ ]
+
+let g:startify_bookmarks = [
+      \ { 'v': '~/.vim/vimrc' },
+      \ ]
+
+" Stop things splitting with Startify and replace it instead
+autocmd User Startified setlocal buftype=
