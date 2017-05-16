@@ -15,6 +15,9 @@ Plug 'tpope/vim-repeat'                                       " Make many more o
 " Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
 
+" Extra syntax highlighting and language support
+Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
+
 
 call plug#end()
 
@@ -25,6 +28,8 @@ let mapleader = " "     " Setup the leader key, used for triggering all kinds of
 
 map , <leader>          " for the sake of muscle memory
 map ,, <leader><leader>
+
+colorscheme adCode      " Set our primary colorscheme
 
 
 " ----------------------------------------------
