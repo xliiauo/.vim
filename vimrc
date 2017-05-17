@@ -14,23 +14,25 @@ Plug 'tpope/vim-repeat'                                       " Make many more o
 
 " Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
+Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
-
 
 call plug#end()
 
 " ----------------------------------------------
 " Setup basic Vim behaviour
 " ----------------------------------------------
-let mapleader = " "     " Setup the leader key, used for triggering all kinds of awesome things
+" Setup the leader key, used for triggering all kinds of awesome things
+let mapleader = " "
 
-map , <leader>          " for the sake of muscle memory
+" for the sake of muscle memory
+map , <leader>
 map ,, <leader><leader>
 
-colorscheme adCode      " Set our primary colorscheme
-
+" Set our primary colorscheme
+colorscheme adCode
 
 " ----------------------------------------------
 " Configure GitGutter
@@ -46,10 +48,14 @@ let g:gitgutter_sign_removed = '-'
 let g:gitgutter_sign_modified_removed = '~'
 let g:gitgutter_max_signs = 1000
 
-nmap <leader>gt :GitGutterToggle<CR>                        " <Leader>gt to toggle the gutter
-nmap <leader>gh :GitGutterLineHighlightsToggle<CR>          " <Leader>gh highlight changed lines
-nmap <Leader>ga <Plug>GitGutterStageHunk                    " <Leager>ga to add the current git hunk to git staging
-nmap <Leader>gu <Plug>GitGutterUndoHunk             " <Leader>gu to undo the current changed hunk
+" <Leader>gt to toggle the gutter
+nmap <leader>gt :GitGutterToggle<CR>
+" <Leader>gh highlight changed lines
+nmap <leader>gh :GitGutterLineHighlightsToggle<CR>
+" <Leager>ga to add the current git hunk to git staging
+nmap <Leader>ga <Plug>GitGutterStageHunk
+" <Leader>gu to undo the current changed hunk
+nmap <Leader>gu <Plug>GitGutterUndoHunk
 
 " ----------------------------------------------
 " Setup the status bar
@@ -67,7 +73,8 @@ let g:airline#extensions#tagbar#enabled = 0
 let g:airline_theme = "kalisi"
 
 set statusline=%<%f\ %h%m%r%=%-20.(line=%l\ of\ %L,col=%c%V%)\%h%m%r%=%-40(,%n%Y%)\%P%#warningmsg#%{SyntasticStatuslineFlag()}%*
-set laststatus=2                                           " Always show status line.
+" Always show status line.
+set laststatus=2
 
 " ----------------------------------------------
 " Setup Startify
@@ -114,10 +121,123 @@ autocmd User Startified setlocal buftype=
 " ----------------------------------------------
 " Configure Buffer Explorer
 " ----------------------------------------------
-let g:bufExplorerDefaultHelp=1
-let g:bufExplorerDisableDefaultKeyMapping=1
+" Allow buffer switching without saving
+set hidden
 
-nmap <silent> <unique> <Leader>. :BufExplorer<CR>     " <leader>. to view all document buffers
-map <silent> <Leader><Leader> :b#<CR>                 " Double leader to switch to the previous buffer
+" <leader>. to view all document buffers
+nmap <silent> <unique> <Leader>. :BufExplorer<CR>
 
-set hidden                                            " Allow buffer switching without saving
+" ----------------------------------------------
+" Setup NERDTree
+" ----------------------------------------------
+
+"  <Leader>m to toggle file tree (,M to select the current file in the tree)
+nmap <silent> <Leader>m :NERDTreeToggle<CR>
+"  <Leader>M to toggle file tree, selecting the current file
+map <silent> <Leader>M :NERDTreeFind<CR>
+
+" A whole bunch of NERDTree configuration stolen from carlhuda's janus
+let NERDTreeIgnore=['\.rbc$', '\~$']
+
+" Make NERDTree close when you open a file from it. Helps recover screen space!
+let NERDTreeQuitOnOpen=1
+
+" Disable netrw's autocmd, since we're ALWAYS using NERDTree
+runtime plugin/netRwPlugin.vim
+augroup FileExplorer
+  au!
+augroup END
+
+let g:NERDTreeHijackNetrw = 0
+
+" If the parameter is a directory (or there was no parameter), open NERDTree
+function s:NERDTreeIfDirectory(directory)
+  if isdirectory(a:directory) || a:directory == ""
+    NERDTree
+  endif
+endfunction
+
+" If the parameter is a directory, cd into it
+function s:CdIfDirectory(directory)
+  if isdirectory(a:directory)
+    call ChangeDirectory(a:directory)
+  endif
+endfunction
+
+" NERDTree utility function
+function s:UpdateNERDTree(stay)
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      NERDTree
+      if !a:stay
+        wincmd p
+      end
+    endif
+  endif
+endfunction
+
+" Utility functions to create file commands
+function s:CommandCabbr(abbreviation, expansion)
+  execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
+endfunction
+
+function s:FileCommand(name, ...)
+  if exists("a:1")
+    let funcname = a:1
+  else
+    let funcname = a:name
+  endif
+
+  execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
+endfunction
+
+function s:DefineCommand(name, destination)
+  call s:FileCommand(a:destination)
+  call s:CommandCabbr(a:name, a:destination)
+endfunction
+
+" Public NERDTree-aware versions of builtin functions
+function ChangeDirectory(dir, ...)
+  execute "cd " . a:dir
+  let stay = exists("a:1") ? a:1 : 1
+  call s:UpdateNERDTree(stay)
+endfunction
+
+function Touch(file)
+  execute "!touch " . a:file
+  call s:UpdateNERDTree(1)
+endfunction
+
+function Remove(file)
+  let current_path = expand("%")
+  let removed_path = fnamemodify(a:file, ":p")
+
+  if (current_path == removed_path) && (getbufvar("%", "&modified"))
+    echo "You are trying to remove the file you are editing. Please close the buffer first."
+  else
+    execute "!rm " . a:file
+  endif
+endfunction
+
+function Edit(file)
+  if exists("b:NERDTreeRoot")
+    wincmd p
+  endif
+
+  execute "e " . a:file
+
+ruby << RUBY
+  destination = File.expand_path(VIM.evaluate(%{system("dirname " . a:file)}))
+  pwd         = File.expand_path(Dir.pwd)
+  home        = pwd == File.expand_path("~")
+
+  if home || Regexp.new("^" + Regexp.escape(pwd)) !~ destination
+    VIM.command(%{call ChangeDirectory(system("dirname " . a:file), 0)})
+  end
+RUBY
+endfunction
+
+" Define the NERDTree-aware aliases
+call s:DefineCommand("cd", "ChangeDirectory")
+call s:DefineCommand("touch", "Touch")
+call s:DefineCommand("rm", "Remove")
