@@ -17,6 +17,7 @@ Plug 'jlanzarotta/bufexplorer'                                " Show a sortable 
 Plug 'ctrlpvim/ctrlp.vim'                                     " Really powerful fuzzy finder for file names
 Plug 'mileszs/ack.vim'                                        " Replace the deprecated rking/ag.vim
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
+Plug 'timakro/vim-searchant'                                  " Better highlighting when searching in file
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
