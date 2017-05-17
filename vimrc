@@ -127,6 +127,8 @@ set hidden
 
 " <leader>. to view all document buffers
 nmap <silent> <unique> <Leader>. :BufExplorer<CR>
+" Double leader to switch to the previous buffer
+map <silent> <Leader><Leader> :b#<CR>
 
 " ----------------------------------------------
 " Setup NERDTree
