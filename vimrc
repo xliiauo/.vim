@@ -35,7 +35,8 @@ Plug 'ajh17/VimCompletesMe'                                   " Very lightweight
 
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
-Plug 'sheerun/vim-polyglot'                                   " Currated group of other excellent plugins
+Plug 'sheerun/vim-polyglot'                                   " A solid language pack for Vim
+Plug 'janko-m/vim-test'                                       " Add test running support for lots of languages & test frameworks
 
 call plug#end()
 
@@ -49,8 +50,68 @@ let mapleader = " "
 map , <leader>
 map ,, <leader><leader>
 
-" Set our primary colorscheme
+syntax on
+filetype on
+filetype indent on
+filetype plugin on
+
+set autoindent                          " Automatically indent based on syntax detection
+set autowrite                           " Writes on make/shell commands
+set backspace=start,indent,eol
+set backupdir=~/.tmp,.         " Don't clutter project dirs up with swap files
+set directory=~/.tmp,.
+set cf                                  " Enable error files & error jumping.
+set complete+=kspell
+set cursorline                          " Hilight the line the cursor is on
+set expandtab                           " Convert tabs to spaces AS IS RIGHT AND PROPER
+set history=1000                        " Remember a decent way back
+set listchars=nbsp:█,eol:¶,tab:>-,extends:»,precedes:«,trail:•
+set mousehide                           " Hide the mouse cursor when typing
+set nowrap                              " Line wrapping off
+set number                              " line numbers
+set ruler                               " Ruler on
+set smarttab
+set spelllang=en_gb
+set t_Co=256                            " Set 256 colour mode
+set tabstop=2                           " Make a tab = 2 spaces
+set timeoutlen=500                      " Milliseconds to wait for another key press when evaluating commands
+set wildmode=list:longest               " Shell-like behaviour for command autocompletion
+set fillchars+=vert:\                   " Set the window borders to not have | chars in them
+set nojoinspaces                        " Use only 1 space after "." when joining lines instead of 2
+
+" -----------------------------------
+" Setup file wildcard ignored names
+" -----------------------------------
+
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem          " Disable output and VCS files
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.jar                " Disable archive files
+set wildignore+=*/vendor/gems/*,*/vendor/cache/*,*/.bundle/*,*/.sass-cache/* " Ignore bundler and sass caches
+set wildignore+=*/tmp/cache/*                                                " Ignore rails temporary asset caches
+set wildignore+=node_modules/*                                               " Ignore node modules
+set wildignore+=deps/*,_build/*                                              " Ignore Elixir & Phoenix deps and build
+set wildignore+=*.swp,*.swo,*~,._*                                           " Disable temp and backup files
+
+" ----------------------------------------------
+" Configure font & colourscheme
+" ----------------------------------------------
 colorscheme adCode
+set guifont=Menlo:h16
+
+" -----------------------------------
+" Search Options
+" -----------------------------------
+set hlsearch        " highlight search matches...
+set incsearch       " ...as you type
+set ignorecase      " Generally ignore case
+set smartcase       " Care about case when capital letters show up
+
+" -----------------------------------
+" GUI Vim Options
+" -----------------------------------
+set guioptions-=T     " no toolbar
+set guioptions-=m     " no menu
+set guioptions+=LlRrb " Hack which adds all scrollbars so that they can be removed, line below breaks without this
+set guioptions-=LlRrb " Remove all scrollbars
 
 " ----------------------------------------------
 " Configure GitGutter
@@ -97,7 +158,6 @@ set laststatus=2
 " ----------------------------------------------
 " Setup Startify
 " ----------------------------------------------
-
 " Setup vim-startify's start screen
 let g:startify_change_to_vcs_root = 1
 let g:startify_files_number = 6
@@ -150,7 +210,6 @@ map <silent> <Leader><Leader> :b#<CR>
 " ----------------------------------------------
 " Setup NERDTree
 " ----------------------------------------------
-
 "  <Leader>m to toggle file tree (,M to select the current file in the tree)
 nmap <silent> <Leader>m :NERDTreeToggle<CR>
 "  <Leader>M to toggle file tree, selecting the current file
@@ -265,7 +324,6 @@ call s:DefineCommand("rm", "Remove")
 " ----------------------------------------------
 " Setup Ack
 " ----------------------------------------------
-
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
   cnoreabbrev Ag Ack
@@ -274,7 +332,6 @@ endif
 " ----------------------------------------------
 " Setup CtrlP File Finder
 " ----------------------------------------------
-
 "  <Leader>f to fuzzy search files
 map <silent> <leader>f :CtrlP<cr>
 "  <Leader>F to fuzzy search files in the same directory as the current file
@@ -295,7 +352,6 @@ endif
 " ----------------------------------------------
 " Configure Projectionist
 " ----------------------------------------------
-
 " Projectionist defaults
 let g:projectionist_heuristics ={
       \  "spec/*.rb": {
@@ -314,7 +370,6 @@ let g:projectionist_heuristics ={
 " ----------------------------------------------
 " Configure Supertab
 " ----------------------------------------------
-
 " Fix supertab/endwise incompatibility
 let g:SuperTabCrMapping = 0
 
@@ -324,3 +379,12 @@ let g:SuperTabCrMapping = 0
 let g:UltiSnipsExpandTrigger = "<C-j>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" ----------------------------------------------
+" Configure Vim-test
+" ----------------------------------------------
+"  <Leader>t to run all tests in the current file if it is a test, otherwise
+"  run the last test file
+map <silent> <leader>t :TestFile<CR>
+"  <Leader>t to run the tests in the scope nearest the cursor
+map <silent> <leader>T :TestNearest<CR>
