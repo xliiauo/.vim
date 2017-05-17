@@ -59,8 +59,8 @@ filetype plugin on
 set autoindent                          " Automatically indent based on syntax detection
 set autowrite                           " Writes on make/shell commands
 set backspace=start,indent,eol
-set backupdir=~/.tmp,.         " Don't clutter project dirs up with swap files
-set directory=~/.tmp,.
+set backupdir=/var/tmp,~/.tmp,.         " Don't clutter project dirs up with swap files
+set directory=/var/tmp,~/.tmp,.
 set cf                                  " Enable error files & error jumping.
 set complete+=kspell
 set cursorline                          " Hilight the line the cursor is on
