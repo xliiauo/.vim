@@ -128,6 +128,8 @@ command! Q :q
 
 " Replace the default U (undo last line) to Redo for speedyness
 nmap U <c-r>
+" Map leader d to definition search
+nmap <leader>d ]<C-d>
 
 " ----------------------------------------------
 " Configure GitGutter
