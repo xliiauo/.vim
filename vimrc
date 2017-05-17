@@ -37,6 +37,7 @@ Plug 'ajh17/VimCompletesMe'                                   " Very lightweight
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
 Plug 'sheerun/vim-polyglot'                                   " A solid language pack for Vim
 Plug 'janko-m/vim-test'                                       " Add test running support for lots of languages & test frameworks
+Plug 'ntpeters/vim-better-whitespace'                         " Whitespace highlighting for Vim
 
 call plug#end()
 
@@ -162,13 +163,12 @@ set laststatus=2
 let g:startify_change_to_vcs_root = 1
 let g:startify_files_number = 6
 let g:startify_custom_header = [
-      \ '   __      __            ',
-      \ '   \ \    / (_)          ',
-      \ '    \ \  / / _ _ __ ___  ',
-      \ '     \ \/ / | | `_ ` _ \ ',
+      \ '   __      __',
+      \ '   \ \    / (_)',
+      \ '    \ \  / / _ _ __ ___',
+      \ '     \ \/ / | | `_ ` _ \',
       \ '      \  /  | | | | | | |',
       \ '       \/   |_|_| |_| |_|',
-      \ '                         ',
       \ ]
 
 let g:startify_custom_footer = [
@@ -388,3 +388,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 map <silent> <leader>t :TestFile<CR>
 "  <Leader>t to run the tests in the scope nearest the cursor
 map <silent> <leader>T :TestNearest<CR>
+
+" ----------------------------------------------
+" Configure Vim Better Whitespace
+" ----------------------------------------------
+" <Leader>s to strip whitespaces
+nmap <leader>s :StripWhitespace<CR>
