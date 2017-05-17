@@ -111,8 +111,8 @@ set smartcase       " Care about case when capital letters show up
 " -----------------------------------
 set guioptions-=T     " no toolbar
 set guioptions-=m     " no menu
-set guioptions+=Ll " Hack which adds left scrollbars so that they can be removed
-set guioptions-=Ll " Remove left scrollbars
+set guioptions+=LlRrb " Hack which adds all scrollbars so that they can be removed, line below breaks without this
+set guioptions-=LlRrb " Remove all scrollbars
 
 " ----------------------------------------------
 " Command Shortcuts
