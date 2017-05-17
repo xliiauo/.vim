@@ -15,6 +15,7 @@ Plug 'tpope/vim-repeat'                                       " Make many more o
 " Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
 Plug 'ctrlpvim/ctrlp.vim'                                     " Really powerful fuzzy finder for file names
+Plug 'mileszs/ack.vim'                                        " Replace the deprecated rking/ag.vim
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 
 " Extra syntax highlighting and language support
@@ -244,6 +245,15 @@ endfunction
 call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
+
+" ----------------------------------------------
+" Setup Ack
+" ----------------------------------------------
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep --smart-case'
+  cnoreabbrev Ag Ack
+endif
 
 " ----------------------------------------------
 " Setup CtrlP File Finder
