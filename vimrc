@@ -22,8 +22,20 @@ Plug 'timakro/vim-searchant'                                  " Better highlight
 " Additional contextual information
 Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
 
+" Extra text manipulation and movement
+Plug 'tpope/vim-commentary'                                   " Quick toggle for code commenting
+
+" Snippets and autocomplete
+Plug 'ervandew/supertab'                                      " Make tab more useful in triggering Vim omni-complete
+Plug 'SirVer/ultisnips'                                       " Track the ultisnips engine
+Plug 'honza/vim-snippets'                                     " Popular Snippets separated from the ultisnips engine
+Plug 'tpope/vim-endwise'                                      " Automatically insert programming block endings (ie. `end` in Ruby, `endif` in VimL)
+Plug 'tpope/vim-ragtag'                                       " Provide bindings for closing HTML/XML tags
+Plug 'ajh17/VimCompletesMe'                                   " Very lightweight completion helper
+
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
+Plug 'sheerun/vim-polyglot'                                   " Currated group of other excellent plugins
 
 call plug#end()
 
@@ -298,3 +310,17 @@ let g:projectionist_heuristics ={
       \    "*": {"make": "mvn"}
       \  }
       \}
+
+" ----------------------------------------------
+" Configure Supertab
+" ----------------------------------------------
+
+" Fix supertab/endwise incompatibility
+let g:SuperTabCrMapping = 0
+
+" ----------------------------------------------
+" Configure Ultisnips
+" ----------------------------------------------
+let g:UltiSnipsExpandTrigger = "<C-j>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
