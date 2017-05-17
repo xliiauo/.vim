@@ -119,13 +119,15 @@ set guioptions-=LlRrb " Remove all scrollbars
 " ----------------------------------------------
 " Disable Ex Mode to remove confusion
 nnoremap Q <Nop>
+" make Y consistent with C and D
+nnoremap Y y$
 
 " make W and Q act like w and q
 command! W :w
 command! Q :q
 
-" make Y consistent with C and D
-nnoremap Y y$
+" Replace the default U (undo last line) to Redo for speedyness
+nmap U <c-r>
 
 " ----------------------------------------------
 " Configure GitGutter
