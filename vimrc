@@ -19,6 +19,9 @@ Plug 'mileszs/ack.vim'                                        " Replace the depr
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 Plug 'timakro/vim-searchant'                                  " Better highlighting when searching in file
 
+" Additional contextual information
+Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
+
 " Extra syntax highlighting and language support
 Plug 'scrooloose/syntastic'                                   " The Godfather of all syntax highlighting and checking
 
@@ -276,3 +279,22 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
+
+" ----------------------------------------------
+" Configure Projectionist
+" ----------------------------------------------
+
+" Projectionist defaults
+let g:projectionist_heuristics ={
+      \  "spec/*.rb": {
+      \     "app/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
+      \     "lib/*.rb":       {"alternate": "spec/{}_spec.rb",         "type": "source"},
+      \     "spec/*_spec.rb": {"alternate": ["app/{}.rb","lib/{}.rb"], "type": "test"}
+      \  },
+      \  "*.java": {
+      \	   "src/main/java/*.java": {"alternate": "src/test/java/{}.java",	"type": "source"},
+      \    "src/test/java/*.java": {"alternate": "src/main/java/{}.java",	"type": "test"},
+      \	   "*.java": {"dispatch": "javac {file}"},
+      \    "*": {"make": "mvn"}
+      \  }
+      \}
