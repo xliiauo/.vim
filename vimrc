@@ -115,6 +115,19 @@ set guioptions+=LlRrb " Hack which adds all scrollbars so that they can be remov
 set guioptions-=LlRrb " Remove all scrollbars
 
 " ----------------------------------------------
+" Command Shortcuts
+" ----------------------------------------------
+" Disable Ex Mode to remove confusion
+nnoremap Q <Nop>
+
+" make W and Q act like w and q
+command! W :w
+command! Q :q
+
+" make Y consistent with C and D
+nnoremap Y y$
+
+" ----------------------------------------------
 " Configure GitGutter
 " ----------------------------------------------
 " Set the git gutter colors to be the same as the number column
