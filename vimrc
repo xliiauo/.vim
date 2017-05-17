@@ -14,6 +14,7 @@ Plug 'tpope/vim-repeat'                                       " Make many more o
 
 " Search and file exploring
 Plug 'jlanzarotta/bufexplorer'                                " Show a sortable list of open buffers
+Plug 'ctrlpvim/ctrlp.vim'                                     " Really powerful fuzzy finder for file names
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 
 " Extra syntax highlighting and language support
@@ -241,3 +242,24 @@ endfunction
 call s:DefineCommand("cd", "ChangeDirectory")
 call s:DefineCommand("touch", "Touch")
 call s:DefineCommand("rm", "Remove")
+
+" ----------------------------------------------
+" Setup CtrlP File Finder
+" ----------------------------------------------
+
+"  <Leader>f to fuzzy search files
+map <silent> <leader>f :CtrlP<cr>
+"  <Leader>F to fuzzy search files in the same directory as the current file
+map <silent> <leader>F :CtrlPCurFile<cr>
+"  <Leader>} to Search for a tag in the current project
+map <silent> <leader>} :CtrlPTag<cr>
+
+let g:ctrlp_show_hidden = 1
+
+" Use Ag for search if its available on this system
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
