@@ -38,6 +38,8 @@ Plug 'scrooloose/syntastic'                                   " The Godfather of
 Plug 'sheerun/vim-polyglot'                                   " A solid language pack for Vim
 Plug 'janko-m/vim-test'                                       " Add test running support for lots of languages & test frameworks
 Plug 'ntpeters/vim-better-whitespace'                         " Whitespace highlighting for Vim
+Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'elzr/vim-json'                                          " A better JSON for Vim
 
 call plug#end()
 
@@ -64,6 +66,8 @@ set directory=/var/tmp,~/.tmp,.
 set cf                                  " Enable error files & error jumping.
 set complete+=kspell
 set cursorline                          " Hilight the line the cursor is on
+set tabstop=2                           " Make a tab = 2 spaces
+set shiftwidth=2                        " When indenting with '>', use 4 spaces width
 set expandtab                           " Convert tabs to spaces AS IS RIGHT AND PROPER
 set history=1000                        " Remember a decent way back
 set listchars=nbsp:█,eol:¶,tab:>-,extends:»,precedes:«,trail:•
@@ -74,7 +78,6 @@ set ruler                               " Ruler on
 set smarttab
 set spelllang=en_gb
 set t_Co=256                            " Set 256 colour mode
-set tabstop=2                           " Make a tab = 2 spaces
 set timeoutlen=500                      " Milliseconds to wait for another key press when evaluating commands
 set wildmode=list:longest               " Shell-like behaviour for command autocompletion
 set fillchars+=vert:\                   " Set the window borders to not have | chars in them
