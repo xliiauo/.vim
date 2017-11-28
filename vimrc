@@ -49,6 +49,9 @@ call plug#end()
 " Setup the leader key, used for triggering all kinds of awesome things
 let mapleader = " "
 
+" Ag with ack.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 " for the sake of muscle memory
 map , <leader>
 map ,, <leader><leader>
