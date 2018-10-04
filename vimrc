@@ -18,6 +18,7 @@ Plug 'ctrlpvim/ctrlp.vim'                                     " Really powerful 
 Plug 'mileszs/ack.vim'                                        " Replace the deprecated rking/ag.vim
 Plug 'scrooloose/nerdtree'                                    " Visualise the project directory and make it easy to navigate
 Plug 'timakro/vim-searchant'                                  " Better highlighting when searching in file
+Plug 'avanzzzi/behave.vim'                                    " Navigation for Python Behave tests
 
 " Additional contextual information
 Plug 'tpope/vim-projectionist'                                " Map tools and actions based on the project
@@ -417,3 +418,6 @@ map <silent> <leader>T :TestNearest<CR>
 " ----------------------------------------------
 " <Leader>s to strip whitespaces
 nmap <leader>s :StripWhitespace<CR>
+
+" Configure behave.vim
+nmap <leader>b :call behave#goto_step_definition()<cr>
