@@ -41,6 +41,10 @@ Plug 'janko-m/vim-test'                                       " Add test running
 Plug 'ntpeters/vim-better-whitespace'                         " Whitespace highlighting for Vim
 Plug 'martinda/Jenkinsfile-vim-syntax'
 Plug 'elzr/vim-json'                                          " A better JSON for Vim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}               " Go language server extension using gopls for coc.nvim.
+
+" Golang support
+Plug 'fatih/vim-go'                                           " Go language support for Vim
 
 call plug#end()
 
