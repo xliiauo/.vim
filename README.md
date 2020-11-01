@@ -51,6 +51,12 @@ $ which vim
 
 Make sure to change git vim to the homebrew vim as well:
 ```
-git config --global core.editor "/usr/local/bin/vim"
+$ git config --global core.editor "/usr/local/bin/vim"
 ```
 
+Additionally, sometimes homebrew installs a newer version of python, but vim is compiled with a different version (for example when you download the compiled MacVim binary directly from its releases) will complaining for a speific version missing like Python `3.8`. You can install that version to solve the issue.
+```
+$ brew install python@3.8
+$ brew unlink python@3.9
+$ brew link --force python@3.8
+```
